@@ -1,19 +1,44 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Neighborhood -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @neighborhood.name %>
-</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:city) %></th>
+      <th><%= model_class.human_attribute_name(:state) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
 
-<p>
-  <strong>City:</strong>
-  <%= @neighborhood.city %>
-</p>
+        <td><%= @neighborhood.name %></td>
+        <td><%= @neighborhood.city %></td>
+        <td><%= @neighborhood.state %></td>
+        <td><%=l @neighborhood.created_at %></td>
+        <td>
+          <%= link_to t('.back', :default => t("helpers.links.back")),
+                        neighborhoods_path, :class => 'btn btn-default'  %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_neighborhood_path(@neighborhood), :class => 'btn btn-default' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        neighborhood_path(@neighborhood),
+                        :method => 'delete',
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-danger' %>
 
-<p>
-  <strong>State:</strong>
-  <%= @neighborhood.state %>
-</p>
+            <p><%= "Add Incident for your neighborhood" %>
+              <%= link_to t('.new', :default => t("helpers.links.new")),
+                         new_neighborhood_incident_path(@neighborhood), :class => 'btn btn-default'  %>
+                        </p>
 
-<%= link_to 'Edit', edit_neighborhood_path(@neighborhood) %> |
-<%= link_to 'Back', neighborhoods_path %>
+        </td>
+      </tr>
+
+  </tbody>
+</table>

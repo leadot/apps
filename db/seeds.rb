@@ -3,5 +3,5 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+neighborhoods = Neighborhood.create([{ name: 'Brooklyn' }, { city:'NY' }, { state:'NY' }])
+Incident.create(description: 'Robbery', neighborhood_id: neighborhoods.first)

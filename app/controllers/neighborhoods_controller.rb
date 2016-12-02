@@ -5,6 +5,7 @@ class NeighborhoodsController < ApplicationController
   # GET /neighborhoods.json
   def index
     @neighborhoods = Neighborhood.all
+
   end
 
   # GET /neighborhoods/1
@@ -65,6 +66,7 @@ class NeighborhoodsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_neighborhood
       @neighborhood = Neighborhood.find(params[:id])
+     
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

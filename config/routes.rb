@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
-  resources :neighborhoods
+  devise_for :users
+  resources :incidents
+  resources :neighborhoods do
+    resources :incidents
+  end
   root to: 'neighborhoods#index'
+
+
 end

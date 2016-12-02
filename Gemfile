@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg', '~> 0.18'
+gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'less-rails-bootstrap'
 gem 'sprockets', '3.6.3'
