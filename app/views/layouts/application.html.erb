@@ -48,9 +48,15 @@
         <a class="navbar-brand" href="#">NWA</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Neighborhoods", "/path1"  %></li>
-            <li><%= link_to "Log In", "/path2"  %></li>
-            <li><%= link_to "Join Us", "/path3"  %></li>
+            <% if user_signed_in? %>
+            <li><%= link_to current_user.email, edit_user_registration_path %></li>
+            <li><%= link_to "Log Out", destroy_user_session_path, method: :delete  %></li>
+            <% else %>
+              <li><%= link_to "Sign Up", new_user_registration_path %></li>
+              <li><%= link_to "Log In", new_user_session_path %></li>
+            <% end %>
+              <li><%= link_to "Neighborhoods", "/"  %></li>
+              <li><%= link_to "Help", "/help"  %></li>
           </ul>
         </div>
       </div>
