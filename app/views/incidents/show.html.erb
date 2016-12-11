@@ -3,21 +3,58 @@
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
 
+<div class='container'>
+  <div class='row'>
+  <div class="col-md-6">
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:date) %>:</strong></dt>
   <dd><%= @incident.date %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:address) %>:</strong></dt>
+  <dd><%= @incident.address %></dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @incident.description %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:neighborhood_id) %>:</strong></dt>
-  <dd><%= @incident.neighborhood_id %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
-              incidents_path, :class => 'btn btn-default'  %>
+              neighborhood_incidents_path(@neighborhood), :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_incident_path(@incident), :class => 'btn btn-default' %>
+              edit_neighborhood_incident_path(@neighborhood, @incident), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              incident_path(@incident),
+              neighborhood_incident_path(@incident),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>
+
+</div>
+
+        <div class="col-md-6">
+           <div class="map-container" style="height:400px; border-radius: 16px 16px; border-color: #fff;
+              border-style: solid; box-shadow: 2px 2px 10px #B1B1B1; margin-top: 25px; border-width: 7px;">
+
+              <div id="map" style="height: 384px; width:100%"> </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: { disableDefaultUI: true}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers([
+       {
+         lat: <%= @incident.latitude %>,
+         lng: <%= @incident.longitude %>,
+         picture: {
+                 url: "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
+                 width:  36,
+                 height: 36
+               }
+
+        }
+       ]);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+  });
+
+</script>

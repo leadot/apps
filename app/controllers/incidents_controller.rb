@@ -1,10 +1,15 @@
 class IncidentsController < ApplicationController
+  before_action :load_neighborhood
   before_action :set_incident, only: [:show, :edit, :update, :destroy]
 
   # GET /incidents
   # GET /incidents.json
   def index
-    @incidents = Incident.all
+    if params[:search].present?
+      @incidents = Incident.near(params[:search], 50, :order => :distance)
+    else
+      @incidents = @neighborhood.incidents.all
+    end
   end
 
   # GET /incidents/1
@@ -19,19 +24,17 @@ class IncidentsController < ApplicationController
 
   # GET /incidents/1/edit
   def edit
-    @neighborhood = Neighborhood.find[:neighborhood_id]
-    @incident = Incident.find(params[:id])
   end
 
   # POST /incidents
   # POST /incidents.json
   def create
-    @neighborhood = Neighborhood.find[:neighborhood_id]
+    @neighborhood = Neighborhood.find(params[:neighborhood_id])
     @incident = @neighborhood.incidents.new(incident_params)
 
     respond_to do |format|
       if @incident.save!
-        format.html { redirect_to neighborhood_incident_path(@neighborhood, @incident), notice: 'Incident was successfully created.' }
+        format.html { redirect_to neighborhood_incidents_path(@neighborhood, @incidents), notice: 'Incident was successfully created.' }
         format.json { render :show, status: :created, location: @incident }
       else
         format.html { render :new }
@@ -43,11 +46,9 @@ class IncidentsController < ApplicationController
   # PATCH/PUT /incidents/1
   # PATCH/PUT /incidents/1.json
   def update
-    @incident = Incident.find(params[:id])
-    @neighborhood = @incident.neighborhood
     respond_to do |format|
       if @incident.update(incident_params)
-        format.html { redirect_to @incident, notice: 'Incident was successfully updated.' }
+        format.html { redirect_to neighborhood_incidents_path(@neighborhood, @incidents), notice: 'Incident was successfully updated.' }
         format.json { render :show, status: :ok, location: @incident }
       else
         format.html { render :edit }
@@ -61,19 +62,23 @@ class IncidentsController < ApplicationController
   def destroy
     @incident.destroy
     respond_to do |format|
-      format.html { redirect_to incidents_url, notice: 'Incident was successfully destroyed.' }
+      format.html { redirect_to neighborhood_incidents_path(@neighborhood), notice: 'Incident was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def load_neighborhood
+      @neighborhood = Neighborhood.find(params[:neighborhood_id])
+    end
+
     def set_incident
       @incident = Incident.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def incident_params
-      params.require(:incident).permit(:date, :description, :neighborhood_id)
+      params.require(:incident).permit(:address, :latitude, :longitude, :date, :description)
     end
 end

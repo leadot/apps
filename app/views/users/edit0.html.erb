@@ -1,0 +1,73 @@
+<%= form_for @user do |f| %>
+    <div class="field">
+      <%= f.label :street %><br />
+      <%= f.text_field :street, autofocus: true %>
+    </div>
+    <div class="field">
+      <%= f.label :city %><br />
+      <%= f.text_field :city, autofocus: true  %>
+    </div>
+    <div class="field">
+        <%= f.label :state %><br />
+        <%= f.text_field :state, autofocus: true  %>
+    </div>
+    <div class="field">
+        <%= f.label :address %><br />
+        <%= f.text_field :address, autofocus: true  %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Submit" %>
+    </div>
+  <% end %>
+
+
+  <div id="floating-panel">
+    <input id="address" type="textbox" value="">
+    <input id="submit" type="button" value="Find Neighborhood">
+  </div>
+  <div id="map"></div>
+
+  <script>
+
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: {lat: -34.397, lng: 150.644}
+      });
+
+      var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+
+
+     })
+
+
+    function geocodeAddress(geocoder, resultsMap) {
+      var address = document.getElementById('address').value;
+
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          resultsMap.setCenter(results[0].geometry.location);
+
+          var marker = new google.maps.Marker({
+            map: resultsMap,
+            position: results[0].geometry.location
+        });
+
+          var lat = results[0].geometry.location.lat();
+          var lng = results[0].geometry.location.lng();
+          var hood = results[0].address_components[0].types[0];
+        console.log(lat, lng, hood);
+
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      })
+    }
+  }
+  </script>
+
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYx7xwDQTH_giQcHYjPKS1pK0CpHSplug&callback=initMap"
+          async defer></script>

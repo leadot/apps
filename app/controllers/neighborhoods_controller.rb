@@ -1,11 +1,11 @@
 class NeighborhoodsController < ApplicationController
   before_action :set_neighborhood, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_filter :owns_neighborhood, only: [ :edit, :update, :destroy]
 
-  # GET /neighborhoods
   # GET /neighborhoods.json
   def index
     @neighborhoods = Neighborhood.all
-
   end
 
   # GET /neighborhoods/1
@@ -26,7 +26,7 @@ class NeighborhoodsController < ApplicationController
   # POST /neighborhoods.json
   def create
     @neighborhood = Neighborhood.new(neighborhood_params)
-
+    @neighborhood.user = current_user
     respond_to do |format|
       if @neighborhood.save
         format.html { redirect_to @neighborhood, notice: 'Neighborhood was successfully created.' }
@@ -64,9 +64,14 @@ class NeighborhoodsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def owns_neighborhood
+      if !user_signed_in? || current_user != Neighborhood.find(params[:id]).user
+        redirect_to neighborhoods_path, error: "You can't do that!"
+      end
+    end
+
     def set_neighborhood
       @neighborhood = Neighborhood.find(params[:id])
-     
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

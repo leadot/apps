@@ -3,12 +3,15 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg', '~> 0.18'
+gem 'gmaps4rails'
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'less-rails-bootstrap'
 gem 'sprockets', '3.6.3'
 gem 'jquery-rails'  # If using Bootstrap's JS plugins.
 gem 'puma', '~> 3.0'
+gem 'geocoder'
+gem 'figaro'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -41,6 +44,8 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
+  gem 'better_errors'
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   #gem 'spring'
 #  gem 'spring-watcher-listen', '~> 2.0.0'

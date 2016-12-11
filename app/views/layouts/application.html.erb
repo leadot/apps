@@ -4,10 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= csrf_meta_tags %>
+
     <title><%= content_for?(:title) ? yield(:title) : "NeighborhoodWatchApp" %></title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyDYx7xwDQTH_giQcHYjPKS1pK0CpHSplug"></script>
+    <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+
+
 
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <!-- Size should be 144 x 144 pixels -->
@@ -29,7 +38,6 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
-    <%= javascript_include_tag "application" %>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -45,18 +53,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">NWA</a>
+        <a class="navbar-brand" href="/">NWA</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav pull-right">
             <% if user_signed_in? %>
-            <li><%= link_to current_user.email, edit_user_registration_path %></li>
+            <li><%= link_to current_user.email, user_session_path %></li>
             <li><%= link_to "Log Out", destroy_user_session_path, method: :delete  %></li>
             <% else %>
               <li><%= link_to "Sign Up", new_user_registration_path %></li>
               <li><%= link_to "Log In", new_user_session_path %></li>
             <% end %>
-              <li><%= link_to "Neighborhoods", "/"  %></li>
-              <li><%= link_to "Help", "/help"  %></li>
+
           </ul>
         </div>
       </div>
@@ -78,4 +85,5 @@
     </div> <!-- /container -->
 
   </body>
+
 </html>

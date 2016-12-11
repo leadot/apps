@@ -1,0 +1,12 @@
+<div class="field">
+<%= form_tag @user, :method => :get do  %>
+<p>
+<%= text_field_tag :address => params[:address]  %>
+<%= submit_tag "Search", :name => nil %>
+</p>
+
+
+
+
+
+<% end %>

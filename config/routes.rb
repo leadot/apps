@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :incidents
+    get '/users/:id', to: 'users#show'
+
+
+  resources :users
   resources :neighborhoods do
     resources :incidents
   end
-  root to: 'neighborhoods#index'
+
+  root to: 'users#index'
 
 
 end

@@ -1,0 +1,55 @@
+<header>
+  <h1 class="display-4">
+    <%= "Welcome, " + @user.first_name.to_s + @user.last_name.to_s + "!" %> </h1>
+</header>
+
+<div class= "jumbotron">
+<p> <strong> Neighborhood: </strong>
+  <%= @user.address %>
+</p>
+
+<p> <strong> Address: </strong>
+  <%= @user.street.to_s + @user.city.to_s + @user.state.to_s %>
+</p>
+
+<p> <strong> Latitude: </strong>
+  <%= @user.latitude %>
+</p>
+
+<p> <strong> longitude: </strong>
+  <%= @user.longitude %>
+</p>
+</div>
+
+<div class="col-md-6">
+<div id="map-container" style="height:400px; border-radius: 16px 16px; border-color: #fff;
+border-style: solid; box-shadow: 2px 2px 10px #B1B1B1; margin-top: 25px; border-width: 7px;">
+ <div id="map" style="height: 384px; width:100%">
+
+
+</div>
+</div>
+</div>
+
+<script>
+
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: { disableDefaultUI: true}, internal: {id: 'map'}}, function(){
+   markers = handler.addMarkers([
+        {
+          lat: <%= @user.latitude %>,
+          lng: <%= @user.longitude %>,
+          picture: {
+                  url: "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
+                  width:  36,
+                  height: 36
+                }
+
+         }
+        ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    });
+
+
+</script>

@@ -1,0 +1,49 @@
+<%= 'User Home Page' %>
+<div class= "jumbotron">
+
+  <%= form_tag users_path, :method => :get do  %>
+  <p>
+    <%= text_field_tag :address => params[:address]  %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+  <% end %>
+
+  <table>
+    <tr>
+      <th> Neighborhood</th>
+      <th> Address</th>
+      <th> Latitude</th>
+      <th> Longitude</th>
+</tr>
+  <% @users.each do |user| %>
+  <td>user.first_name</td>
+  <td>user.last_name</td>
+  <td>user.neighboorhood</td>
+  <td><%= link_to "Show", user %></td>
+  <td><%= link_to "Edit", edit_user_path(user) %></td>
+  <td><%= link_to "Destory", user, :confirm => "Are you sure?", :method => :delete %></td>
+</tr>
+<% end %>
+</table>
+</div>
+ <p><%= link_to "New Location", new_neighborhood_path %></p>
+
+ <script>
+
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers([
+      <% @users.each do |user| %>
+       {
+         lat: <%= user.latitude %>,
+         lng: <%= user.longitude %>,
+
+       },
+     <% end %>
+    ]);
+
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    });
+
+ </script>

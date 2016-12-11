@@ -1,1 +1,1 @@
-json.partial! "neighborhoods/neighborhood", neighborhood: @neighborhood
+json.partial! "users/user", user: @user
