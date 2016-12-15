@@ -7,29 +7,4 @@
 
 
 
-
-
 <% end %>
-
-<script>
-
-  handler = Gmaps.build('Google');
-  handler.buildMap({ provider: { disableDefaultUI: true}, internal: {id: 'map'}}, function(){
-   markers = handler.addMarkers([
-        {
-          lat: <%= current_user.latitude %>,
-          lng: <%= current_user.longitude %>,
-          picture: {
-                  url: "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
-                  width:  36,
-                  height: 36
-                }
-
-         }
-        ]);
-    handler.bounds.extendWith(markers);
-    handler.fitMapToBounds();
-    });
-
-
-</script>

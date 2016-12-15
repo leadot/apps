@@ -11,7 +11,7 @@ belongs_to :neighborhood
   def image_url
     case description
     when "theft"
-      "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png"
+      "https://cdn2.iconfinder.com/data/icons/snipicons/500/map-marker-128.png"
     when "whatever"
       "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png"
     else

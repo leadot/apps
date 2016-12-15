@@ -10,8 +10,8 @@ class User < ApplicationRecord
   geocoded_by :address
   before_save :geocode
 
-    def address
-      "#{street}#{city}#{state}"
-    end
+     #def address
+      # "#{street}#{city}#{state}"
+     #end
 
   end

@@ -12,6 +12,7 @@ gem 'jquery-rails'  # If using Bootstrap's JS plugins.
 gem 'puma', '~> 3.0'
 gem 'geocoder'
 gem 'figaro'
+gem "http"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -45,6 +46,7 @@ group :development do
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
   gem 'better_errors'
+  gem "binding_of_caller"
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   #gem 'spring'

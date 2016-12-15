@@ -5,7 +5,7 @@ class Neighborhood < ApplicationRecord
 
   validates_presence_of :name, :city, :state
 
-  belongs_to :user
+belongs_to :user
 
   geocoded_by :address
   before_save :geocode

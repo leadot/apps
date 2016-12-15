@@ -20,11 +20,9 @@
         <%- model_class = Incident -%>
 
           <h3><%= "Incidents" %></h3>
-          <div>  <%= link_to t('.new', :default => t("helpers.links.new")),
-                                          new_neighborhood_incident_path(@neighborhood),
-                                  :class => 'btn btn-default btn-xs pull-right' %>
-
-        </div>
+          <div>  <%= link_to t('.new', :default => t("helpers.links.new")), new_neighborhood_incident_path(@neighborhood),
+                                  :class => 'btn btn-default btn-xs pull-right', :span =>  'glyphicon glyphicon-star' %>
+          </div>
 
         <table class="table table-striped">
         <thead>
